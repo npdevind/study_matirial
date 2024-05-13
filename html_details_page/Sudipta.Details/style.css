@@ -1,0 +1,17 @@
+body {
+    padding: 20px;
+}
+h1 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  #home-tab-pane {
+    padding: 30px;
+  }
+  #profile-tab-pane {
+    padding: 30px;
+  }
+  #contact-tab-pane {
+    padding: 30px;
+  }
