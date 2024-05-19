@@ -41,6 +41,13 @@
                     placeholder="Name"
                   />
                   <label for="name">Full Name</label>
+                  <div
+                    class="invalid-feedback"
+                    style="display: none"
+                    id="nameErrorMsg"
+                  >
+                    Please enter valid name
+                  </div>
                 </div>
               </div>
 
@@ -59,7 +66,7 @@
               <div class="col-md-6">
                 <div class="form-floating mb-3">
                   <input
-                    type="text"
+                    type="email"
                     class="form-control"
                     id="email"
                     placeholder="email"
@@ -87,6 +94,7 @@
               type="submit"
               class="btn btn-sm btn-primary"
               value="Submit"
+              id="SubmitID"
             />
           </div>
         </form>

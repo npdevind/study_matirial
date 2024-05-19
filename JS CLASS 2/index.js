@@ -29,11 +29,16 @@ function handelFormSubmit(e) {
 
   const inputs = document.querySelectorAll("input");
   inputs.forEach((element) => {
-    element.value = "";
+    if (!["Submit", "Update"].includes(element.value)) element.value = "";
   });
 
-  if (editId) updateItem(editId, formData);
-  else addItem(formData);
+  if (editId) {
+    const validationStatus = handelValidation(formData);
+    if (validationStatus) updateItem(editId, formData);
+  } else {
+    const validationStatus = handelValidation(formData);
+    if (validationStatus) addItem(formData);
+  }
 }
 
 //for add form data to local storage
@@ -71,6 +76,10 @@ function handelList() {
         </tr>
     `;
   });
+  const SubmitType = document.getElementById("SubmitID").value;
+
+  if (SubmitType == "Update")
+    document.getElementById("SubmitID").value = "Submit";
 }
 
 //set editable data in form
@@ -85,6 +94,7 @@ function editItem(index) {
   document.getElementById("fname").value = item.fname;
   document.getElementById("email").value = item.email;
   document.getElementById("dob").value = item.dob;
+  document.getElementById("SubmitID").value = "Update";
 }
 
 //for Update item
@@ -102,3 +112,39 @@ function deleteItem(index) {
   localStorage.setItem("items", JSON.stringify(items));
   handelList();
 }
+
+function handelValidation(data) {
+  let status = false;
+
+  const nameField = document.getElementById("name");
+  const nameError = document.getElementById("nameErrorMsg");
+
+  if (data.name == "") {
+    nameField.classList.add("is-invalid");
+    nameError.style.display = "block";
+  } else {
+    nameField.classList.remove("is-invalid");
+    nameError.style.display = "none";
+    status = true;
+  }
+
+  return status;
+}
+
+/**rule if from validation
+ * 1. Name/father name/ any kind name field :
+ * role : only alphabate (A-Z a-z ' ') are allowed no spical char on not any number allow
+ * 2. email
+ * role : only type email is allowed
+ * 3. phone number :
+ * role : 1. only number allowed but input field type should be text
+ *        2. valid for only indian starting number (6-9) 10 digit
+ * 4. Date of birth :
+ * role  : 1. end date validation => showing previous date
+ *         2. age should be 18-60 years
+ *
+ *5. email :  should be a valid email
+ *
+ *
+ * js regex match
+ * **/
