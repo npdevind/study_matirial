@@ -114,21 +114,29 @@ function deleteItem(index) {
 }
 
 function handelValidation(data) {
-  let status = false;
-
   const nameField = document.getElementById("name");
   const nameError = document.getElementById("nameErrorMsg");
 
-  if (data.name == "") {
+  const fnameField = document.getElementById("fname");
+  const fnameError = document.getElementById("fnameErrorMsg");
+
+  if (data.name == "" || data.fname == "") {
     nameField.classList.add("is-invalid");
     nameError.style.display = "block";
+
+    fnameField.classList.add("is-invalid");
+    fnameError.style.display = "block";
+
+    return false;
   } else {
     nameField.classList.remove("is-invalid");
     nameError.style.display = "none";
-    status = true;
-  }
 
-  return status;
+    fnameField.classList.remove("is-invalid");
+    fnameError.style.display = "none";
+
+    return true;
+  }
 }
 
 /**rule if from validation
