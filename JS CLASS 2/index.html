@@ -39,6 +39,7 @@
                     class="form-control"
                     id="name"
                     placeholder="Name"
+                    onkeyup="handelNameValidation()"
                   />
                   <label for="name">Full Name</label>
                   <div
@@ -79,6 +80,13 @@
                     placeholder="email"
                   />
                   <label for="email">Email</label>
+                  <div
+                    class="invalid-feedback"
+                    style="display: none"
+                    id="emailErrorMsg"
+                  >
+                    Please enter valid email
+                  </div>
                 </div>
               </div>
 
@@ -91,6 +99,13 @@
                     placeholder="dob"
                   />
                   <label for="dob">Date of Birth</label>
+                  <div
+                    class="invalid-feedback"
+                    style="display: none"
+                    id="dobErrorMsg"
+                  >
+                    Please enter valid dob
+                  </div>
                 </div>
               </div>
             </div>

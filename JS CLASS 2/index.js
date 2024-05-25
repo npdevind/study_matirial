@@ -120,12 +120,29 @@ function handelValidation(data) {
   const fnameField = document.getElementById("fname");
   const fnameError = document.getElementById("fnameErrorMsg");
 
-  if (data.name == "" || data.fname == "") {
+  const emailField = document.getElementById("email");
+  const emailError = document.getElementById("emailErrorMsg");
+
+  const dobField = document.getElementById("dob");
+  const dobError = document.getElementById("dobErrorMsg");
+
+  if (
+    data.name == "" ||
+    data.fname == "" ||
+    data.email == "" ||
+    data.dob == ""
+  ) {
     nameField.classList.add("is-invalid");
     nameError.style.display = "block";
 
     fnameField.classList.add("is-invalid");
     fnameError.style.display = "block";
+
+    emailField.classList.add("is-invalid");
+    emailError.style.display = "block";
+
+    dobField.classList.add("is-invalid");
+    dobError.style.display = "block";
 
     return false;
   } else {
@@ -135,7 +152,29 @@ function handelValidation(data) {
     fnameField.classList.remove("is-invalid");
     fnameError.style.display = "none";
 
+    emailField.classList.remove("is-invalid");
+    emailError.style.display = "none";
+
+    dobField.classList.remove("is-invalid");
+    dobError.style.display = "none";
+
     return true;
+  }
+}
+
+function handelNameValidation() {
+  const nameField = document.getElementById("name");
+  const nameError = document.getElementById("nameErrorMsg");
+  const regex = /^[a-zA-Z .]+$/;
+  const nameValue = document.getElementById("name").value;
+  if (regex.test(nameValue)) {
+    nameField.classList.remove("is-invalid");
+    nameError.style.display = "none";
+    nameError.innerHTML = "";
+    nameError.innerHTML = "Only characters  allowed.";
+  } else {
+    nameField.classList.add("is-invalid");
+    nameError.style.display = "block";
   }
 }
 

@@ -32,3 +32,6 @@ Browser APIs:
     Basic JavaScript Algorithms and Data Structures:
     Understanding common data structures (arrays, objects, linked lists).
     Solving basic algorithms (sorting, searching, recursion).
+
+
+
