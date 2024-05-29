@@ -52,5 +52,6 @@
 
 // console.log(array1 == array2);  // false =>  Each array has its own reference in memory
 
+const array = "nil";
 
-Implemented a CRUD application using local storage by the help of js
+console.log(["nil"].includes("nil"));

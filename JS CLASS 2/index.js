@@ -1,126 +1,191 @@
 document.addEventListener("DOMContentLoaded", function () {
-  if (window.location.pathname.includes("index.html")) {
-    initialPageLoad();
-    handelList();
-  }
+    if (window.location.pathname.includes("index.html")) {
+        initialPageLoad();
+        handelList();
+    }
 });
 
 function initialPageLoad() {
-  const form = document.getElementById("my_student_form");
-  if (form) form.addEventListener("submit", handleFormSubmit);
-  else console.error("Form not found");
+    const form = document.getElementById("my_student_form");
+    if (form) form.addEventListener("submit", handelFormSubmit);
+    else console.error("Form not found");
 }
 
-function handleFormSubmit(event) {
-  event.preventDefault();
-  const fullName = document.getElementById("fullname").value;
-  const fatherName = document.getElementById("fname").value;
-  const email = document.getElementById("email").value;
-  const dob = document.getElementById("dob").value;
-
-  const indexValue = document.getElementById("editIndex")
-    ? document.getElementById("editIndex").value
-    : "";
-
-  const formData = { fullName, fatherName, email, dob, indexValue };
-
-  if (indexValue) updateItem(indexValue, formData);
-  else addItem(formData);
+//for get all local storage data
+function getItem() {
+    return JSON.parse(localStorage.getItem("items")) ?? [];
 }
 
+//form form submit
+function handelFormSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const fname = document.getElementById("fname").value;
+    const email = document.getElementById("email").value;
+    const dob = document.getElementById("dob").value;
+    const editId = document.getElementById("editId").value;
+
+    const formData = { name, fname, email, dob };
+
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach((element) => {
+        if (!["Submit", "Update"].includes(element.value)) element.value = "";
+    });
+
+    if (editId) {
+        const validationStatus = handelValidation(formData);
+        if (validationStatus) updateItem(editId, formData);
+    } else {
+        const validationStatus = handelValidation(formData);
+        if (validationStatus) addItem(formData);
+    }
+}
+
+//for add form data to local storage
 function addItem(item) {
-  //   const items = [];
-  const items = JSON.parse(localStorage.getItem("items")) || [];
-  items.push(item);
+    const items = JSON.parse(localStorage.getItem("items")) ?? [];
+    items.push(item);
 
-  /** localStorage can only store strings. If you attempt to store an object or array directly, it will be implicitly converted to a string,
-   * often resulting in the unhelpful string representation of the object or array.
-   * By using JSON.stringify() to convert the array to a JSON string,
-   * you ensure that the data is stored in a structured and serializable
-   * format that can be easily retrieved and parsed later when needed.
-   * When retrieving data from localStorage, you can use JSON.parse() to convert the
-   * JSON string back into the original array or object, restoring its structure and
-   * data integrity. */
-  localStorage.setItem("items", JSON.stringify(items));
+    localStorage.setItem("items", JSON.stringify(items));
 
-  // Select all input elements
-  const inputs = document.querySelectorAll("input");
-
-  // Loop through each input element and set its value to an empty string
-  inputs.forEach((input) => {
-    input.value = "";
-  });
-
-  handelList();
+    handelList();
 }
 
-function updateItem(index, newItem) {
-  const items = getItems();
-  items[index] = newItem;
-  localStorage.setItem("items", JSON.stringify(items));
-  handelList();
-}
-
-function getItems() {
-  return JSON.parse(localStorage.getItem("items")) ?? [];
-}
-
+//form showing local storage data in a list
 function handelList() {
-  const itemList = document.getElementById("student_list");
-  const items = getItems();
-  //   console.log(items);
-  itemList.innerHTML = "";
-
-  items.forEach((item, index) => {
-    itemList.innerHTML += `
+    const itemList = document.getElementById("student_list");
+    const items = getItem();
+    itemList.innerHTML = "";
+    if (items.length === 0)
+        itemList.innerHTML = ` 
+    <tr> 
+        <td col-span="5" class="text-center">No Data found! </td>
+    </tr>`;
+    items.forEach((item, index) => {
+        itemList.innerHTML += `
         <tr>
-            <td>${index + 1}</td>
-            <td>${item.fullName}</td>
-            <td>${item.fatherName}</td>
+            <td>${index}</td>
+            <td>${item.name}</td>
+            <td>${item.fname}</td>
             <td>${item.email}</td>
             <td>${item.dob}</td>
             <td>
-                <button onclick="editItem(${index})">Edit</button>
-                <button onclick="deleteItem(${index})">Delete</button>
+                <button class="btn btn-sm btn-info" onclick="editItem(${index})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteItem(${index})">Delete</button>
             </td>
-           
         </tr>
     `;
-  });
+    });
+    const SubmitType = document.getElementById("SubmitID").value;
+
+    if (SubmitType == "Update") document.getElementById("SubmitID").value = "Submit";
 }
 
+//set editable data in form
 function editItem(index) {
-  const items = getItems();
-  const item = items[index];
-  //   console.log(item);
-  const form = document.getElementById("my_student_form");
+    const editId = document.getElementById("editId");
+    editId.setAttribute("value", index);
 
-  if (document.getElementById("editIndex")) {
-    document.getElementById("editIndex").value = index;
-  } else {
-    const editIndex = document.createElement("input");
-    document.createElement("input");
-    editIndex.setAttribute("type", "hidden");
-    editIndex.setAttribute("id", "editIndex");
-    editIndex.setAttribute("value", index);
-    form.appendChild(editIndex);
-  }
-  document.getElementById("fullname").value = item.fullName;
-  document.getElementById("fname").value = item.fatherName;
-  document.getElementById("email").value = item.email;
-  document.getElementById("dob").value = item.dob;
+    const items = getItem();
+    item = items[index];
+
+    document.getElementById("name").value = item.name;
+    document.getElementById("fname").value = item.fname;
+    document.getElementById("email").value = item.email;
+    document.getElementById("dob").value = item.dob;
+    document.getElementById("SubmitID").value = "Update";
 }
 
+//for Update item
+function updateItem(id, data) {
+    const items = getItem();
+    items[id] = data;
+    localStorage.setItem("items", JSON.stringify(items));
+    handelList();
+}
+
+//for delete item from list
 function deleteItem(index) {
-  const items = getItems();
-  items.splice(index, 1);
-  localStorage.setItem("items", JSON.stringify(items));
-  handelList();
+    const items = getItem();
+    items.splice(index, 1);
+    localStorage.setItem("items", JSON.stringify(items));
+    handelList();
 }
 
-// const fruits = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
+function handelValidation(data) {
+    const nameField = document.getElementById("name");
+    const nameError = document.getElementById("nameErrorMsg");
 
-// // Extract a section from index 1 to index 3 (excluding 3)
-// const slicedFruits = fruits.slice(1, 3);
+    const fnameField = document.getElementById("fname");
+    const fnameError = document.getElementById("fnameErrorMsg");
 
-// console.log(slicedFruits); // Output: ['Banana', 'Cherry']
+    const emailField = document.getElementById("email");
+    const emailError = document.getElementById("emailErrorMsg");
+
+    const dobField = document.getElementById("dob");
+    const dobError = document.getElementById("dobErrorMsg");
+
+    if (data.name == "" || data.fname == "" || data.email == "" || data.dob == "") {
+        nameField.classList.add("is-invalid");
+        nameError.style.display = "block";
+
+        fnameField.classList.add("is-invalid");
+        fnameError.style.display = "block";
+
+        emailField.classList.add("is-invalid");
+        emailError.style.display = "block";
+
+        dobField.classList.add("is-invalid");
+        dobError.style.display = "block";
+
+        return false;
+    } else {
+        nameField.classList.remove("is-invalid");
+        nameError.style.display = "none";
+
+        fnameField.classList.remove("is-invalid");
+        fnameError.style.display = "none";
+
+        emailField.classList.remove("is-invalid");
+        emailError.style.display = "none";
+
+        dobField.classList.remove("is-invalid");
+        dobError.style.display = "none";
+
+        return true;
+    }
+}
+
+function handelNameValidation() {
+    const nameField = document.getElementById("name");
+    const nameError = document.getElementById("nameErrorMsg");
+    const regex = /^[a-zA-Z .]+$/;
+    const nameValue = document.getElementById("name").value;
+    if (regex.test(nameValue)) {
+        nameField.classList.remove("is-invalid");
+        nameError.style.display = "none";
+        nameError.innerHTML = "";
+        nameError.innerHTML = "Only characters  allowed.";
+    } else {
+        nameField.classList.add("is-invalid");
+        nameError.style.display = "block";
+    }
+}
+
+/**rule if from validation
+ * 1. Name/father name/ any kind name field :
+ * role : only alphabate (A-Z a-z ' ') are allowed no spical char on not any number allow
+ * 2. email
+ * role : only type email is allowed
+ * 3. phone number :
+ * role : 1. only number allowed but input field type should be text
+ *        2. valid for only indian starting number (6-9) 10 digit
+ * 4. Date of birth :
+ * role  : 1. end date validation => showing previous date
+ *         2. age should be 18-60 years
+ *
+ *5. email :  should be a valid email
+ *
+ *
+ * js regex match
+ * **/
