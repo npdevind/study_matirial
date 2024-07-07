@@ -1,5 +1,10 @@
+const productModel = require("../models/productModel");
+
 const productList = async (req, res) => {
-    res.send("i am product list controller");
+    const getData = await productModel.getProduct();
+    res.render("product/list", {
+        data: getData,
+    });
 };
 
 module.exports = {
