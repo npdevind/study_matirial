@@ -6,3 +6,6 @@ folder : JS CLASS 2
 
 folder : JS CLASS 3
 => in this class create weather application using free weather api
+
+mysql -u root -p
+GRANT ALL PRIVILEGES ON _._ TO 'USER'@'localhost' IDENTIFIED BY '';
