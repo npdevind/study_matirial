@@ -14,12 +14,33 @@ const addProduct = async (req, res) => {
 };
 
 const addNewProduct = async (req, res) => {
-    console.log(" I am here");
-    console.log(req.body);
+    try {
+        const insertNewData = await productModel.insertNewModel(req.body);
+        if (insertNewData.status) {
+            req.flash("success", insertNewData.msg);
+            res.redirect("/admin/product");
+        }
+    } catch (error) {
+        req.flash("error", error.message);
+        res.redirect("/admin/product");
+    }
+};
+
+const deleteProduct = async (req, res) => {
+    try {
+        const deleteProduct = await productModel.deleteProduct(req.params.id);
+        if (deleteProduct) {
+            req.flash("success", "Successfully deleted");
+            return res.redirect("/admin/product");
+        }
+    } catch (error) {
+        req.flash("error", error.message);
+    }
 };
 
 module.exports = {
     productList,
     addProduct,
     addNewProduct,
+    deleteProduct,
 };

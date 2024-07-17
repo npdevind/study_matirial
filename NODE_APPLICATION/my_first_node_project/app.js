@@ -3,19 +3,40 @@ const app = express();
 require("dotenv").config();
 const db = require("./db");
 const web = require("./routes/web");
+const api = require("./routes/api");
 const ejs = require("ejs");
 const path = require("path");
 const bodyParser = require("body-parser");
+const flash = require("connect-flash");
+const session = require("express-session");
 
-app.use("/admin", web);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(
+    session({
+        secret: "yourSecretKey",
+        resave: false,
+        saveUninitialized: true,
+    })
+);
+
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.successMessages = req.flash("success");
+    res.locals.errorMessages = req.flash("error");
+    next();
+});
+
+const PORT = process.env.PORT;
 
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
-const PORT = process.env.PORT;
+app.use("/admin", web);
+app.use("/api", api);
+
 db.connect((err) => {
     if (err) {
         console.log(err);
