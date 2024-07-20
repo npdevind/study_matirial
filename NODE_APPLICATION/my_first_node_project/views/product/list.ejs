@@ -37,11 +37,15 @@
                         <td><%= item.name %></td>
                         <td><%= item.description %></td>
                         <td><%= item.price %></td>
-                        <td><%= moment(item.created_at).format("YYYY-MM-DD") %></td>
                         <td><%= item.quantity %></td>
+                        <td><%= moment(item.created_at).format("YYYY-MM-DD") %></td>
+
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</button>
+                                <a href="product/edit/<%= item.id %>">
+                                    <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</button>
+                                </a>
+
                                 <a href="product/delete/<%=item.id %>">
                                     <button type="button" class="btn btn-sm btn-danger"><i class="bi bi-archive-fill"></i> Delete</button>
                                 </a>

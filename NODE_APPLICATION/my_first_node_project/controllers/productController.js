@@ -38,9 +38,32 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+const editPageOpen = async (req, res) => {
+    const getProductData = await productModel.getProductData(req.params.id);
+    res.render("product/edit", {
+        data: getProductData,
+        moment: moment,
+    });
+};
+
+const updateProduct = async (req, res) => {
+    try {
+        const updateProduct = await productModel.updateProduct(req.body);
+        if (updateProduct.status) {
+            req.flash("success", updateProduct.msg);
+            res.redirect("/admin/product");
+        }
+    } catch (error) {
+        req.flash("error", error.message);
+        res.redirect("/admin/product");
+    }
+};
+
 module.exports = {
     productList,
     addProduct,
     addNewProduct,
     deleteProduct,
+    editPageOpen,
+    updateProduct,
 };
