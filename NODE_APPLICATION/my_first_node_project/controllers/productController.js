@@ -22,7 +22,7 @@ const addNewProduct = async (req, res) => {
         }
     } catch (error) {
         req.flash("error", error.message);
-        res.redirect("/admin/product");
+        res.redirect("/admin/add-product");
     }
 };
 

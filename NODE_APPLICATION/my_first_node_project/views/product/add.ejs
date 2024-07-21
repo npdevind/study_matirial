@@ -7,30 +7,43 @@
     </center>
     <center class="mb-3"><h2>Add New Product</h2></center>
 
+    <center class="p-3">
+        <% if(successMessages.length > 0){ %>
+        <div class="alert alert-success" role="alert"><% successMessages.forEach((msg)=>{ %> <%= msg %> <% }) %></div>
+        <% } %> <% if(errorMessages.length > 0){ %>
+        <div class="alert alert-danger" role="alert"><% errorMessages.forEach((msg)=>{ %> <%= msg %> <% }) %></div>
+        <% } %>
+    </center>
+
     <div class="p-2">
         <div class="card">
-            <form action="/admin/add-new-product" method="post">
+            <form action="/admin/add-new-product" method="post" id="productSubmitForm">
                 <div class="cad-body">
                     <div class="row p-4">
                         <div class="col-md-4">
                             <label for="name" class="from-label">Name</label>
                             <input type="text" name="name" id="name" value="" class="form-control" />
+                            <div id="validationProductName" class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
                             <label for="description" class="from-label">Description</label>
                             <textarea type="text" name="description" id="description" value="" class="form-control"></textarea>
+                            <div id="validationProductDescription" class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
                             <label for="price" class="from-label">Price</label>
                             <input type="text" name="price" id="price" value="" class="form-control" />
+                            <div id="validationProductPrice" class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
                             <label for="quantity" class="from-label">Quantity</label>
                             <input type="text" name="quantity" id="quantity" value="" class="form-control" />
+                            <div id="validationProductQuantity" class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
                             <label for="date" class="from-label">Date</label>
                             <input type="date" name="date" id="date" value="" class="form-control" />
+                            <div id="validationProductDate" class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -43,5 +56,40 @@
         </div>
     </div>
 </body>
+
+<!-- <script>
+    $(document).ready(function () {
+        $("#productSubmitForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 10,
+                },
+                description: {
+                    required: true,
+                },
+                price: {
+                    required: true,
+                    number: true,
+                },
+                quantity: {
+                    required: true,
+                },
+                date: {
+                    required: true,
+                    date: true,
+                },
+            },
+            message: {
+                name: {
+                    minlength: "Your name must be at least 10 characters long",
+                },
+            },
+            submitHandler: function (form) {
+                form.submit();
+            },
+        });
+    });
+</script> -->
 
 <%- include('../layout/footer') %>

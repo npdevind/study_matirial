@@ -9,6 +9,14 @@ const getProduct = async () => {
 
 const insertNewModel = async (body) => {
     const { name, description, price, quantity, date } = body;
+
+    const messageArray = [];
+    const nameRegex = /^[a-zA-Z .]+$/;
+    if (!nameRegex.test(name)) messageArray.push("please enter valid name");
+    if (!Number(price)) messageArray.push("enter valid price");
+
+    if (messageArray.length > 0) throw Error(messageArray);
+
     const queryString = `insert into product (name, description, price, quantity, created_at) values (
     '${name}', '${description}', ${price}, ${quantity}, '${date}') returning id`;
     const data = await db.query(queryString);
