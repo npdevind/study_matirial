@@ -1,4 +1,5 @@
 <%- include('../layout/header') %>
+<!-- <%- include('../layout/sidebar') %> -->
 
 <body>
     <center class="mb-3">
@@ -19,6 +20,9 @@
                 <a href="/admin/add-product">
                     <button class="btn btn-sm btn-success"><i class="bi bi-plus"></i> Add new product</button>
                 </a>
+                <!-- <a href="/admin/add-edit-product">
+                    <button class="btn btn-sm btn-success"><i class="bi bi-plus"></i> Add new product</button>
+                </a> -->
             </div>
             <div class="card-body">
                 <table>
@@ -29,6 +33,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Date</th>
+                        <!-- <th>Image</th> -->
                         <th>Action</th>
                     </tr>
                     <% data.forEach((item)=>{ %>
@@ -38,11 +43,12 @@
                         <td><%= item.description %></td>
                         <td><%= item.price %></td>
                         <td><%= item.quantity %></td>
-                        <td><%= moment(item.created_at).format("YYYY-MM-DD") %></td>
 
+                        <td><%= moment(item.created_at).format("YYYY-MM-DD") %></td>
+                        <!-- <td><img src="<%= item.file_path %>" alt="" srcset="" /></td> -->
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <a href="product/edit/<%= item.id %>">
+                                <a href="/admin/add-edit-product/<%= item.id %>">
                                     <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-pencil-fill"></i> Edit</button>
                                 </a>
 

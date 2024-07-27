@@ -17,7 +17,7 @@
 
     <div class="p-2">
         <div class="card">
-            <form action="/admin/add-new-product" method="post" id="productSubmitForm">
+            <form action="/admin/add-new-product" method="post" id="productSubmitForm" enctype="multipart/form-data">
                 <div class="cad-body">
                     <div class="row p-4">
                         <div class="col-md-4">
@@ -45,6 +45,11 @@
                             <input type="date" name="date" id="date" value="" class="form-control" />
                             <div id="validationProductDate" class="invalid-feedback"></div>
                         </div>
+                        <div class="col-md-4">
+                            <label class="from-label">upload</label>
+                            <input type="file" name="image" id="image" value="" class="form-control" onchange="preView()" />
+                            <img id="preview" src="" height="50%" width="30%"></img>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer bg-white">
@@ -57,39 +62,29 @@
     </div>
 </body>
 
-<!-- <script>
-    $(document).ready(function () {
-        $("#productSubmitForm").validate({
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 10,
-                },
-                description: {
-                    required: true,
-                },
-                price: {
-                    required: true,
-                    number: true,
-                },
-                quantity: {
-                    required: true,
-                },
-                date: {
-                    required: true,
-                    date: true,
-                },
-            },
-            message: {
-                name: {
-                    minlength: "Your name must be at least 10 characters long",
-                },
-            },
-            submitHandler: function (form) {
-                form.submit();
-            },
-        });
-    });
-</script> -->
+<script>
+    function preView() {
+        var fileInput = document.getElementById("image");
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            fileInput.value = "";
+            return false;
+        } else {
+            //Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function () {
+                    var output = document.getElementById("preview");
+                    output.src = reader.result;
+                    
+                };
+                reader.readAsDataURL(event.target.files[0]);
+                $("#image-error").remove();
+            }
+        }
+        // $("#x_content").click();
+    }
+</script>
 
 <%- include('../layout/footer') %>

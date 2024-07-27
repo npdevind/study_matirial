@@ -31,6 +31,7 @@ app.use((req, res, next) => {
 const PORT = process.env.PORT;
 
 app.set("views", path.join(__dirname, "views"));
+app.set("upload", path.join(__dirname, "public/upload"));
 app.engine("ejs", require("ejs").renderFile);
 app.set("view engine", "ejs");
 
