@@ -48,3 +48,20 @@ export const updateBlogCategory = async (req, res) => {
         });
     }
 };
+
+export const deleteBlogCategory = async (req, res) => {
+    try {
+        const { id } = req.query;
+        const data = await blogModal.deleteBlogCategory({ id: id });
+        if (data.status) {
+            res.send({
+                message: data.msg,
+            });
+        }
+    } catch (error) {
+        res.send({
+            status: false,
+            message: error.message,
+        });
+    }
+};

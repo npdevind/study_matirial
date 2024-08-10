@@ -1,7 +1,7 @@
 export const validationForAdd = async (req, res, next) => {
     try {
         const body = req.body;
-        const regex = /^[A-Za-z]+$/;
+        const regex = /^[A-Za-z ]+$/;
         if (body.categoryName === "" && body.isActive === "") {
             throw Error("All fields are required.");
         }
@@ -19,7 +19,7 @@ export const validationForAdd = async (req, res, next) => {
 export const validationForUpdate = async (req, res, next) => {
     try {
         const body = req.body;
-        const regex = /^[A-Za-z]+$/;
+        const regex = /^[A-Za-z ]+$/;
         if (!body.id) throw Error("updater id not found.");
         if (body.categoryName === "" && body.isActive === "") {
             throw Error("All fields are required.");

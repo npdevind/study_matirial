@@ -14,6 +14,15 @@ export const getBlogCategoryList = async () => {
 
 export const addNewBlogCategory = async ({ categoryName, isActive }) => {
     try {
+        const catName = categoryName ? categoryName.toLowerCase().replace(" ", "") : "";
+        if (catName) {
+            const { rows } = await con.query(
+                `select count(1) as "totalCount" from blog_category where LOWER(REPLACE(category_name, ' ', '')) = '${catName}'`
+            );
+
+            if (parseInt(rows[0].totalCount) >= 1) throw Error("This category name is already present. Enter a new category name.");
+        }
+
         const queryString = `insert into blog_category (category_name, is_active) VALUES ('${categoryName}', ${isActive}) returning id`;
         const data = await con.query(queryString);
         if (!data) throw error("Something wrong!");
@@ -36,6 +45,22 @@ export const updateBlogCategory = async ({ id, categoryName, isActive }) => {
             msg: "Category updated successfully.",
         };
     } catch (error) {
+        throw Error(error.message);
+    }
+};
+
+export const deleteBlogCategory = async ({ id }) => {
+    try {
+        await con.query(`BEGIN`);
+        const { rowCount } = await con.query(`DELETE FROM blog_category where id = ${id}`);
+        if (rowCount === 0) throw Error("Id not found.");
+        await con.query(`COMMIT`);
+        return {
+            status: true,
+            msg: "Category deleted successfully.",
+        };
+    } catch (error) {
+        await con.query(`ROLLBACK`);
         throw Error(error.message);
     }
 };

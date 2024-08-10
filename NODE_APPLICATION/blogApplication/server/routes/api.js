@@ -9,4 +9,6 @@ router.post("/add-blog-category", blogMiddleware.validationForAdd, blogControlle
 
 router.post("/update-blog-category", blogMiddleware.validationForUpdate, blogController.updateBlogCategory);
 
+router.delete("/delete-blog-category/:id?", blogController.deleteBlogCategory);
+
 export default router;

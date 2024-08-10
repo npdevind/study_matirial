@@ -74,5 +74,8 @@ let newArray = [...nums, ...nums2]; //spread
 function showNumber(...number) {
     return number;
 }
-console.log(showNumber(1, 2, 3, "A", "hello", true, 4.25));
-console.log(showNumber(1, 2));
+// console.log(showNumber(1, 2, 3, "A", "hello", true, 4.25));
+// console.log(showNumber(1, 2));
+
+const myNum = parseInt("sdsds"); //NaN
+console.log(myNum);
