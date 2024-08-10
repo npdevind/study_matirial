@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .header, .footer {
+        background-color: #282c34;
+        color: white;
+        padding: 20px;
+    }
+
+    .header {
+        flex-shrink: 0;
+    }
+
+    .footer {
+        flex-shrink: 0;
+    }
+
+    .main-content {
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>My Website</h1>
+  </header>
+  
+  <main class="main-content">
+    <div class="card" >
+      <h2>Products</h2>
+      <button type="button" onclick="location.href='/admin/product'"> Product List</button>
+    </div>
+    <div class="card" >
+      <h2>Blogs</h2>
+      <button type="button" onclick="location.href='blog/blogs'"> Blog List</button>
+    </div>
+    <div class="card">
+      <h2>Users</h2>
+      <button type="button" onclick="location.href='/user/user-list'"> User List</button>
+
+    </div>
+  </main>
+  
+  <footer class="footer">
+    <p>&copy; 2024 My Website</p>
+  </footer>
+
+  
+</body>
+</html>

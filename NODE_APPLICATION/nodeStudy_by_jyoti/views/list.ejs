@@ -1,0 +1,55 @@
+<%- include('./layout/header') %>
+    <body>
+        <center class="mb-3">
+            <h3>Product Module</h3>
+        </center>
+        <center class="p-3">
+            <% if(successMessages.length > 0){ %>
+            <div class="alert alert-success" role="alert"><% successMessages.forEach((msg)=>{ %> <%= msg %> <% }) %></div>
+            <% } %> <% if(errorMessages.length > 0){ %>
+            <div class="alert alert-danger" role="alert"><% errorMessages.forEach((msg)=>{ %> <%= msg %> <% }) %></div>
+            <% } %>
+        </center>
+        <div class="p-2">
+            <div class="card">
+                <div class="card-header">
+                   
+                    <button class="btn btn-sm btn-success" onclick="location.href='/admin/add-product'"><i class="bi bi-plus"></i> Add new product</button>
+                    
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        <% if(data != null){
+                            data.forEach((item)=>{ %>
+                                <tr>
+                                    <td><%= item.id %></td>
+                                    <td><%= item.name %></td>
+                                    <td><%= item.description %></td>
+                                    <td><%= item.price %></td>
+                                    <td><%= item.quantity %></td>
+                                    <td><%= moment(item.created_at).format("YYYY-MM-DD") %></td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="location.href='/admin/add-product/<%=item.id %>'"><i class="bi bi-pencil-fill"></i> Edit</button>
+                                            <button type="button" class="btn btn-sm btn-danger" onclick="location.href='/admin/delete-product/<%=item.id %>'"><i class="bi bi-archive-fill"></i> Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% })} else{ %>
+                                    <tr> <td>No Data Found</td></tr>
+                               <% }%>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+<%- include('./layout/footer') %>
