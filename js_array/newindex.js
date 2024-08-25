@@ -1,33 +1,51 @@
-let array1 = [1, 2, 3];
-let array2 = [8, 5, 6];
+const nums = [1, 2, 3];
+const nums2 = [4, 5, 6];
 
-const array3 = [...array1, ...array2];
+const newArray = nums2.concat(nums);
 
-const n = [2, 4, 6, 7];
+// console.log(newArray);
 
-// map
-const newArray = n.map((item, index) => {
-    return item + 2;
+// slice
+
+const myArray = ["A", "B", "C", "D", "E"];
+const myArraySlice = myArray.slice(1, 4);
+// const myArraySlice2 = myArray.slice(-3);
+
+// splice
+myArray.splice(0, 2);
+// const myArraySlice2 = myArray.splice(1, 0, "F");
+
+// console.log(myArray);
+// console.log(myArraySlice2);
+
+// fill
+
+const dummy = [2, 5, 1, 6];
+
+dummy.fill("i", 1, 3);
+// console.log(dummy);
+
+// findindex
+
+const no = [1, 2, 3, 4];
+
+const index = no.findIndex((item) => {
+    return item === 2;
 });
+// console.log(index);
 
-// const newNumber = n.filter((item, index, array) => {
-//     return item === 2;
-// });
+const a = [[1, 2], 3, 6, [[5, 9]]];
 
-// const newNumber = n.some((item, index, array) => {
-//     return item > 1;
-// });
+// console.log(a.flat(2));
 
-const newNumber = n.every((item, index, array) => {
-    return item < 1;
-});
+// console.log(a.flat(2).reverse());
 
-// console.log(newNumber);
+// sorting
 
-function showNumber(...number) {
-    return number;
-}
-console.log(showNumber(2, 4, "sgs", true));
+const array = [8, 9, 7, 5, 2, 6, 4, 1, 3];
 
-// console.log(showNumber(1, 2, 3, "A", "hello", true, 4.25));
-// console.log(showNumber(1, 2));
+const assOrderSort = array.sort((a, b) => a - b);
+// console.log(assOrderSort);
+
+const descOrderSort = array.sort((a, b) => b - a);
+// console.log(descOrderSort);

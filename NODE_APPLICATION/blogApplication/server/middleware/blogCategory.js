@@ -1,6 +1,18 @@
+import * as helper from "../helper/index.js";
+
 export const validationForAdd = async (req, res, next) => {
     try {
         const body = req.body;
+        const myImage = req.body.image;
+
+        const fileType = await helper.getBase64FileType(myImage);
+
+        if (fileType != "png") throw Error("Only png file is allowed");
+
+        const fileSize = await helper.getFileSize(myImage);
+
+        if (fileSize > 50) throw Error("File size should be under 50kb");
+
         const regex = /^[A-Za-z ]+$/;
         if (body.categoryName === "" && body.isActive === "") {
             throw Error("All fields are required.");

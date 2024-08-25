@@ -10,6 +10,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static("public"));
+
 app.use(web);
 app.use("/api/v1", api);
 

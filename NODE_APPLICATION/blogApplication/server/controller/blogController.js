@@ -17,8 +17,8 @@ export const getBlogCategoryList = async (req, res) => {
 
 export const addNewBlogCategory = async (req, res) => {
     try {
-        const { categoryName, isActive } = req.body;
-        const data = await blogModal.addNewBlogCategory({ categoryName: categoryName, isActive: isActive });
+        const { categoryName, isActive, image } = req.body;
+        const data = await blogModal.addNewBlogCategory({ categoryName: categoryName, isActive: isActive, image: image });
         res.send({
             status: true,
             inserted_id: data.id,

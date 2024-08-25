@@ -1,9 +1,12 @@
 import con from "../db.js";
+import * as helper from "../helper/index.js";
+import fs from "fs-extra";
+import path from "path";
 
 export const getBlogCategoryList = async () => {
     try {
         const data = await con.query(
-            `select id, trim(category_name) as name, to_char(created_date, 'YYYY-MM-DD') as created_date, is_active from blog_category `
+            `select id, trim(category_name) as name, to_char(created_date, 'YYYY-MM-DD') as created_date, is_active, file from blog_category `
         );
         if (data.rows.length === 0) throw Error("No data found!");
         return data.rows;
@@ -12,7 +15,7 @@ export const getBlogCategoryList = async () => {
     }
 };
 
-export const addNewBlogCategory = async ({ categoryName, isActive }) => {
+export const addNewBlogCategory = async ({ categoryName, isActive, image }) => {
     try {
         const catName = categoryName ? categoryName.toLowerCase().replace(" ", "") : "";
         if (catName) {
@@ -23,7 +26,21 @@ export const addNewBlogCategory = async ({ categoryName, isActive }) => {
             if (parseInt(rows[0].totalCount) >= 1) throw Error("This category name is already present. Enter a new category name.");
         }
 
-        const queryString = `insert into blog_category (category_name, is_active) VALUES ('${categoryName}', ${isActive}) returning id`;
+        const uploadDir = "./public/uploads/";
+
+        const base64Data = image.replace(/^data:.+;base64,/, "");
+
+        const fileName = Date.now() + "." + (await helper.getBase64FileType(image));
+
+        const filePath = path.join(uploadDir, fileName); // "public/uploads/56456456.png"
+
+        fs.writeFile(filePath, base64Data, "base64").then((err) => {
+            if (err) throw Error("Problem in file upload.");
+        });
+
+        const fileNameForDb = "uploads/" + fileName;
+
+        const queryString = `insert into blog_category (category_name, is_active, file) VALUES ('${categoryName}', ${isActive},'${fileNameForDb}') returning id`;
         const data = await con.query(queryString);
         if (!data) throw error("Something wrong!");
         return {
