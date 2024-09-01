@@ -1,0 +1,72 @@
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
+const Footer = () => {
+    return (
+        <>
+            <footer className="bg-dark text-light py-4">
+                <div className="container">
+                    <div className="row">
+                        {/* Company Info */}
+                        <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                            <h5>Company Name</h5>
+                            <p>We are dedicated to providing the best service possible. Contact us for more information about our offerings.</p>
+                        </div>
+
+                        {/* Quick Links */}
+                        <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                            <h5>Quick Links</h5>
+                            <ul className="list-unstyled">
+                                <li>
+                                    <a href="#" className="text-light">
+                                        Home
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" className="text-light">
+                                        About
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" className="text-light">
+                                        Services
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" className="text-light">
+                                        Contact
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Social Media */}
+                        <div className="col-lg-4 col-md-12">
+                            <h5>Follow Us</h5>
+                            <div>
+                                <a href="#" className="text-light me-3">
+                                    {/* <FontAwesomeIcon icon={faFacebook} size="2x" /> */}
+                                    <FaFacebook />
+                                </a>
+                                <a href="#" className="text-light me-3">
+                                    {/* <FontAwesomeIcon icon={faTwitter} size="2x" /> */}
+                                    <FaXTwitter />
+                                </a>
+                                <a href="#" className="text-light">
+                                    {/* <FontAwesomeIcon icon={faInstagram} size="2x" /> */}
+                                    <FaInstagram />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-center mt-4">
+                        <p className="mb-0">&copy; {new Date().getFullYear()} Company Name. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </>
+    );
+};
+
+export default Footer;

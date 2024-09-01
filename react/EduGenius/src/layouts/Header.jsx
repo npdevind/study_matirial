@@ -1,33 +1,68 @@
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 const Header = () => {
     return (
         <>
-            <div className="bg-secondary bg-opacity-25 shadow-md p-2">
-                <div className="row mt-1">
-                    <div className="col-md-2">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
+                <div className="container-fluid">
+                    {/* Logo */}
+                    <Link className="navbar-brand" to="/">
                         <img src={logo} alt="logo" height={40} width={40} />
+                    </Link>
+
+                    {/* Menu */}
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/about">
+                                    About Us
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/job-section">
+                                    Job Section
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/resume-build">
+                                    Resume Build
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/course">
+                                    Course
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/feedback">
+                                    Feedback
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
-                    <div className="col-md-6">
-                        <div className="d-flex flex-row justify-content-md-center">
-                            <div className="p-2">About Us</div>
-                            <div className="p-2">Job Section</div>
-                            <div className="p-2">Resume Build</div>
-                            <div className="p-2">Course</div>
-                            <div className="p-2">Feedback</div>
-                        </div>
-                    </div>
-                    <div className="col-md-4 text-end">
-                        <div className="btn-group gap-4">
-                            <button type="button" className="btn btn-outline-primary btn-sm rounded">
-                                Log in
-                            </button>
-                            <button type="button" className="btn btn-outline-primary btn-sm rounded">
-                                Sign up
-                            </button>
-                        </div>
+
+                    {/* Login/Signup Button */}
+                    <div className="d-flex">
+                        <Link to="/login">
+                            <button className="btn btn-outline-primary me-2 btn-sm">Login</button>
+                        </Link>
+                        <Link to="/sign-up">
+                            <button className="btn btn-primary btn-sm">Sign Up</button>
+                        </Link>
                     </div>
                 </div>
-            </div>
+            </nav>
         </>
     );
 };
